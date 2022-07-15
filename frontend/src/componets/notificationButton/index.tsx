@@ -1,4 +1,4 @@
-import icon from '../../assets/img/icons-lembrete.gif'
+import icon from '../../assets/img/icons-lembrete.png'
 import './style.css'
 
 function NotificationButton() {

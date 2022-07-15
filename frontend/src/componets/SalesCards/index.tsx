@@ -12,7 +12,7 @@ function SalesCards() {
     const [maxDate, setMaxDate] = useState(max);
     return (
         <div className="card">
-            <h2 className="sales-title">Vendas</h2>
+            <h2 className="sales-title">Envio de SMS</h2>
             <div>
                 <div className="form-control-container">
                     <DatePicker

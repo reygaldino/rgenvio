@@ -70,7 +70,7 @@ function SalesCards() {
                                 <td>R$ {client.amount.toFixed(2)}</td>
                                 <td>
                                     <div className="red-btn-container">
-                                        <NotificationButton />
+                                        <NotificationButton clientId={client.id} />
                                     </div>
                                 </td>
                             </tr>

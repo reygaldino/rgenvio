@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import icon from '../../assets/img/icons-lembrete.png'
 import { BASE_URL } from '../../utils/request';
 import './style.css'
@@ -11,7 +12,7 @@ type Props = {
 function handleClick(clientId :number){
     axios(`${BASE_URL}/client/${clientId}/notification`) 
         .then(reponse => {
-            console.log("Teste")
+            toast.info("Mensagem enviada com sucesso!");
         })
 }
 

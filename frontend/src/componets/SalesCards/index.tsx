@@ -1,7 +1,9 @@
 import axios from "axios";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Client } from "../../models/client";
+import { BASE_URL } from "../../utils/request";
 import NotificationButton from '../notificationButton';
 import './style.css';
 
@@ -11,10 +13,12 @@ function SalesCards() {
     const max = new Date();
     const [minDate, setMinDate] = useState(min);
     const [maxDate, setMaxDate] = useState(max);
-    
+
+    const [client, setClient] = useState<Client[]>([]);
+
     useEffect(() => {
-        axios.get("http://localhost:8080/client").then(response => {
-            console.log(response.data);
+        axios.get(`${BASE_URL}/client`).then(response => {
+            setClient(response.data.content);
         })
     }, []);
 
@@ -25,7 +29,7 @@ function SalesCards() {
                 <div className="form-control-container">
                     <DatePicker
                         selected={minDate}
-                        onChange={(date: Date) => setMinDate(date) }
+                        onChange={(date: Date) => setMinDate(date)}
                         className="dsmeta-form-control"
                         dateFormat="dd/MM/yyyy"
                     />
@@ -33,7 +37,7 @@ function SalesCards() {
                 <div className="form-control-container">
                     <DatePicker
                         selected={maxDate}
-                        onChange={(date: Date) => setMaxDate(date) }
+                        onChange={(date: Date) => setMaxDate(date)}
                         className="dsmeta-form-control"
                         dateFormat="dd/MM/yyyy"
                     />
@@ -53,45 +57,23 @@ function SalesCards() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="show992">#1</td>
-                            <td className="show576">08/07/2022</td>
-                            <td>Anakin</td>
-                            <td className="show992">15</td>
-                            <td className="show992">11</td>
-                            <td>R$ 55300.00</td>
-                            <td>
-                                <div className="red-btn-container">
-                                    <NotificationButton />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="show992">#2</td>
-                            <td className="show576">08/07/2022</td>
-                            <td>Anakin</td>
-                            <td className="show992">15</td>
-                            <td className="show992">11</td>
-                            <td>R$ 55300.00</td>
-                            <td>
-                                <div className="red-btn-container">
-                                    <NotificationButton />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="show992">#3</td>
-                            <td className="show576">08/07/2022</td>
-                            <td>Anakin</td>
-                            <td className="show992">15</td>
-                            <td className="show992">11</td>
-                            <td>R$ 55300.00</td>
-                            <td>
-                                <div className="red-btn-container">
-                                    <NotificationButton />
-                                </div>
-                            </td>
-                        </tr>
+                        {client.map(client => {
+                            return(
+                            <tr key={client.id}>
+                                <td className="show992">{client.id}</td>
+                                <td className="show576">{new Date(client.date).toLocaleDateString()}</td>
+                                <td>{client.sellerName}</td>
+                                <td className="show992">{client.visited}5</td>
+                                <td className="show992">{client.deals}</td>
+                                <td>R$ {client.amount.toFixed(2)}</td>
+                                <td>
+                                    <div className="red-btn-container">
+                                        <NotificationButton />
+                                    </div>
+                                </td>
+                            </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>

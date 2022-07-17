@@ -72,6 +72,4 @@ public class Client {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	
-	
 }
